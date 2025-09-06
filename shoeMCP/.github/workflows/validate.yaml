@@ -1,0 +1,14 @@
+name: Pull Request validation
+
+on: [pull_request]
+
+
+jobs:
+  shoeMCP-contracts-ci:
+    name: Run shoeMCP-contracts validation
+    uses: ./.github/workflows/shoeMCP-contracts-ci.yaml
+
+  shoeMCP-frontend-ci:
+    name: Run shoeMCP-frontend validation
+    uses: ./.github/workflows/shoeMCP-frontend-ci.yaml
+

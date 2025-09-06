@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+      - '.vscode/**'
+      - '.idea/**'
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  shoeMCP-contracts-validate:
+    name: Run shoeMCP-contracts release
+    secrets: inherit
+    uses: ./.github/workflows/shoeMCP-contracts-ci.yaml
+
+  shoeMCP-contracts-release:
+    name: Run shoeMCP-contracts release
+    secrets: inherit
+    uses: ./.github/workflows/shoeMCP-contracts-cd.yaml
+    needs: shoeMCP-contracts-validate
+
+  shoeMCP-frontend-validate:
+    name: Run shoeMCP-frontend release
+    secrets: inherit
+    uses: ./.github/workflows/shoeMCP-frontend-ci.yaml
+
+  shoeMCP-frontend-release:
+    name: Run shoeMCP-frontend release
+    secrets: inherit
+    uses: ./.github/workflows/shoeMCP-frontend-cd.yaml
+    needs: shoeMCP-frontend-validate

@@ -1,0 +1,293 @@
+#pragma version 10
+#pragma typetrack false
+
+// @algorandfoundation/algorand-typescript/arc4/index.d.ts::Contract.approvalProgram() -> uint64:
+main:
+    intcblock 0 1 32
+    bytecblock 0x151f7c75 "properties"
+    // smart_contracts/hello_world/contract.algo.ts:40
+    // export default class FractionalPlaneOwnership extends Contract {
+    txn NumAppArgs
+    bz main_bare_routing@8
+    pushbytess 0x541bc477 0xf8b9f76e 0xda172a08 // method "createAirplaneListing(string,uint64,uint64)uint64", method "getListing(uint64)(string,uint64,uint64,uint64,uint64)", method "getAlgoBalance(account)uint64"
+    txna ApplicationArgs 0
+    match main_createAirplaneListing_route@3 main_getListing_route@4 main_getAlgoBalance_route@5
+
+main_after_if_else@12:
+    // smart_contracts/hello_world/contract.algo.ts:40
+    // export default class FractionalPlaneOwnership extends Contract {
+    intc_0 // 0
+    return
+
+main_getAlgoBalance_route@5:
+    // smart_contracts/hello_world/contract.algo.ts:97
+    // @abimethod({ readonly: true })
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/hello_world/contract.algo.ts:40
+    // export default class FractionalPlaneOwnership extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    txnas Accounts
+    // smart_contracts/hello_world/contract.algo.ts:97
+    // @abimethod({ readonly: true })
+    callsub getAlgoBalance
+    itob
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+main_getListing_route@4:
+    // smart_contracts/hello_world/contract.algo.ts:66
+    // @abimethod({ readonly: true })
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/hello_world/contract.algo.ts:40
+    // export default class FractionalPlaneOwnership extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    // smart_contracts/hello_world/contract.algo.ts:66
+    // @abimethod({ readonly: true })
+    callsub getListing
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+main_createAirplaneListing_route@3:
+    // smart_contracts/hello_world/contract.algo.ts:46
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/hello_world/contract.algo.ts:40
+    // export default class FractionalPlaneOwnership extends Contract {
+    txna ApplicationArgs 1
+    extract 2 0
+    txna ApplicationArgs 2
+    btoi
+    txna ApplicationArgs 3
+    btoi
+    // smart_contracts/hello_world/contract.algo.ts:46
+    // @abimethod()
+    callsub createAirplaneListing
+    itob
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+main_bare_routing@8:
+    // smart_contracts/hello_world/contract.algo.ts:40
+    // export default class FractionalPlaneOwnership extends Contract {
+    txn OnCompletion
+    bnz main_after_if_else@12
+    txn ApplicationID
+    !
+    assert // can only call when creating
+    intc_1 // 1
+    return
+
+
+// smart_contracts/hello_world/contract.algo.ts::FractionalPlaneOwnership.createAirplaneListing(planeAddress: bytes, shares: uint64, pricePerShare: uint64) -> uint64:
+createAirplaneListing:
+    // smart_contracts/hello_world/contract.algo.ts:46-47
+    //   @abimethod()
+    // public createAirplaneListing(planeAddress: string, shares: uint64, pricePerShare: uint64): uint64 {
+    proto 3 1
+    // smart_contracts/hello_world/contract.algo.ts:82-92
+    // const txnResult = itxn
+    //   .assetConfig({
+    //     assetName: Bytes(airplaneAddress).slice(0, 32).toString(),
+    //     unitName: 'PLANE',
+    //     total: shares,
+    //     decimals: 0,
+    //     manager: Global.currentApplicationAddress,
+    //     reserve: Global.currentApplicationAddress,
+    //     fee: 0,
+    //   })
+    //   .submit()
+    itxn_begin
+    // smart_contracts/hello_world/contract.algo.ts:84
+    // assetName: Bytes(airplaneAddress).slice(0, 32).toString(),
+    frame_dig -3
+    len
+    intc_0 // 0
+    dig 1
+    >=
+    intc_0 // 0
+    dig 2
+    uncover 2
+    select
+    intc_2 // 32
+    dig 2
+    >=
+    intc_2 // 32
+    dig 3
+    uncover 2
+    select
+    frame_dig -3
+    cover 2
+    substring3
+    // smart_contracts/hello_world/contract.algo.ts:88
+    // manager: Global.currentApplicationAddress,
+    global CurrentApplicationAddress
+    // smart_contracts/hello_world/contract.algo.ts:89
+    // reserve: Global.currentApplicationAddress,
+    dup
+    itxn_field ConfigAssetReserve
+    itxn_field ConfigAssetManager
+    // smart_contracts/hello_world/contract.algo.ts:87
+    // decimals: 0,
+    intc_0 // 0
+    itxn_field ConfigAssetDecimals
+    frame_dig -2
+    itxn_field ConfigAssetTotal
+    // smart_contracts/hello_world/contract.algo.ts:85
+    // unitName: 'PLANE',
+    pushbytes "PLANE"
+    itxn_field ConfigAssetUnitName
+    itxn_field ConfigAssetName
+    // smart_contracts/hello_world/contract.algo.ts:82-91
+    // const txnResult = itxn
+    //   .assetConfig({
+    //     assetName: Bytes(airplaneAddress).slice(0, 32).toString(),
+    //     unitName: 'PLANE',
+    //     total: shares,
+    //     decimals: 0,
+    //     manager: Global.currentApplicationAddress,
+    //     reserve: Global.currentApplicationAddress,
+    //     fee: 0,
+    //   })
+    pushint 3 // 3
+    itxn_field TypeEnum
+    // smart_contracts/hello_world/contract.algo.ts:90
+    // fee: 0,
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/hello_world/contract.algo.ts:82-92
+    // const txnResult = itxn
+    //   .assetConfig({
+    //     assetName: Bytes(airplaneAddress).slice(0, 32).toString(),
+    //     unitName: 'PLANE',
+    //     total: shares,
+    //     decimals: 0,
+    //     manager: Global.currentApplicationAddress,
+    //     reserve: Global.currentApplicationAddress,
+    //     fee: 0,
+    //   })
+    //   .submit()
+    itxn_submit
+    itxn CreatedAssetID
+    // smart_contracts/hello_world/contract.algo.ts:53
+    // address: new arc4.Str(planeAddress),
+    swap
+    itob
+    extract 6 2
+    frame_dig -3
+    concat
+    // smart_contracts/hello_world/contract.algo.ts:54
+    // totalShares: new arc4.UintN64(shares),
+    frame_dig -2
+    itob
+    // smart_contracts/hello_world/contract.algo.ts:56
+    // pricePerShare: new arc4.UintN64(pricePerShare),
+    frame_dig -1
+    itob
+    // smart_contracts/hello_world/contract.algo.ts:57
+    // privatePlaneID: new arc4.UintN64(assetId),
+    dig 3
+    itob
+    // smart_contracts/hello_world/contract.algo.ts:52-58
+    // const propertyStruct = new AirplainShare({
+    //   address: new arc4.Str(planeAddress),
+    //   totalShares: new arc4.UintN64(shares),
+    //   availableShares: new arc4.UintN64(shares),
+    //   pricePerShare: new arc4.UintN64(pricePerShare),
+    //   privatePlaneID: new arc4.UintN64(assetId),
+    // })
+    pushbytes 0x0022
+    dig 3
+    concat
+    uncover 3
+    concat
+    uncover 2
+    concat
+    dig 1
+    concat
+    uncover 2
+    concat
+    // smart_contracts/hello_world/contract.algo.ts:43
+    // public listedProperties = BoxMap<uint64, AirplainShare>({ keyPrefix: 'properties' })
+    bytec_1 // "properties"
+    uncover 2
+    concat
+    // smart_contracts/hello_world/contract.algo.ts:61
+    // this.listedProperties(assetId).value = propertyStruct.copy()
+    dup
+    box_del
+    pop
+    swap
+    box_put
+    // smart_contracts/hello_world/contract.algo.ts:63
+    // return assetId
+    retsub
+
+
+// smart_contracts/hello_world/contract.algo.ts::FractionalPlaneOwnership.getListing(assetId: uint64) -> bytes:
+getListing:
+    // smart_contracts/hello_world/contract.algo.ts:66-67
+    // @abimethod({ readonly: true })
+    // public getListing(assetId: uint64): AirplainShare {
+    proto 1 1
+    // smart_contracts/hello_world/contract.algo.ts:68
+    // assert(this.listedProperties(assetId).exists, 'listing not found')
+    frame_dig -1
+    itob
+    // smart_contracts/hello_world/contract.algo.ts:43
+    // public listedProperties = BoxMap<uint64, AirplainShare>({ keyPrefix: 'properties' })
+    bytec_1 // "properties"
+    swap
+    concat
+    // smart_contracts/hello_world/contract.algo.ts:68
+    // assert(this.listedProperties(assetId).exists, 'listing not found')
+    dup
+    box_len
+    bury 1
+    assert // listing not found
+    // smart_contracts/hello_world/contract.algo.ts:69
+    // const listing = this.listedProperties(assetId).value.copy()
+    box_get
+    assert // Box must have value
+    // smart_contracts/hello_world/contract.algo.ts:70
+    // return listing
+    retsub
+
+
+// smart_contracts/hello_world/contract.algo.ts::FractionalPlaneOwnership.getAlgoBalance(user: bytes) -> uint64:
+getAlgoBalance:
+    // smart_contracts/hello_world/contract.algo.ts:97-98
+    //   @abimethod({ readonly: true })
+    // public getAlgoBalance(user: Account): uint64 {
+    proto 1 1
+    // smart_contracts/hello_world/contract.algo.ts:99
+    // return user.balance
+    frame_dig -1
+    acct_params_get AcctBalance
+    assert // account funded
+    retsub

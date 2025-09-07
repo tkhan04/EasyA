@@ -1,7 +1,6 @@
-// src/components/Home.tsx
 import { useWallet } from '@txnlab/use-wallet-react'
 import React, { useState } from 'react'
-import ConnectWallet from './components/ConnectWallet'
+import ConnectWallet from './components/ConnectWallet' // Ensure this path is correct
 import Transact from './components/Transact'
 import AppCalls from './components/AppCalls'
 
@@ -15,7 +14,6 @@ interface CardData {
   fullDescription: string
   totalshare: number
   shareAvalaible: number
-
 }
 
 const cards: CardData[] = [
@@ -32,7 +30,6 @@ const cards: CardData[] = [
     image: 'https://media.istockphoto.com/photos/small-single-engine-propeller-airplane-picture-id537584895?k=6&m=537584895&s=612x612&w=0&h=8qphW1aSAd-zASssWzHaUgwXPrbF1tmiH_iNhP4xzcA=',
     buttonText: 'View',
     fullDescription: 'Built in 2009, 3000 Hours of air time. Looking to split into 30 shares for better sustainablity as I no longer have the means to afford the plane alone, however still want to retain the ablity to fly.'
-
   },
   {
     title: 'Card Three',
@@ -40,7 +37,6 @@ const cards: CardData[] = [
     image: 'https://media.istockphoto.com/id/1501079590/photo/small-light-airplane-on-green-field.jpg?b=1&s=170667a&w=0&k=20&c=UWlncGXL5zVgC01tHSGXGGxhbK6V9uNBodmxwyDxG0Q=',
     buttonText: 'View',
     fullDescription: 'Built in 2009, 3000 Hours of air time. Looking to split into 30 shares for better sustainablity as I no longer have the means to afford the plane alone, however still want to retain the ablity to fly.'
-
   },
   {
     title: 'Card Four',
@@ -48,20 +44,16 @@ const cards: CardData[] = [
     image: 'https://media.istockphoto.com/id/172646269/photo/private-airplane-taking-off-from-runway.jpg?s=612x612&w=0&k=20&c=M_SL2UflP58OmlSZPIN0HK2FqubpjMdNdtnofIk-_xY=',
     buttonText: 'View',
     fullDescription: 'Built in 2009, 3000 Hours of air time. Looking to split into 30 shares for better sustainablity as I no longer have the means to afford the plane alone, however still want to retain the ablity to fly.'
-
   }
 ]
-
 
 const Home: React.FC<HomeProps> = () => {
   const [openWalletModal, setOpenWalletModal] = useState<boolean>(false)
   const [openDemoModal, setOpenDemoModal] = useState<boolean>(false)
   const [appCallsDemoModal, setAppCallsDemoModal] = useState<boolean>(false)
   const [selectedCard, setSelectedCard] = useState<CardData | null>(null)
-  const [OpenWallet, WalletState] = useState
 
   const { activeAddress } = useWallet()
-
 
   const toggleWalletModal = () => {
     setOpenWalletModal(!openWalletModal)
@@ -75,10 +67,21 @@ const Home: React.FC<HomeProps> = () => {
     setAppCallsDemoModal(!appCallsDemoModal)
   }
 
-return (
+  return (
     <>
       <div className="navbar bg-base-100 shadow-sm">
         <a className="btn btn-ghost text-xl">AirAlgo</a>
+        <div className="flex justify-center flex-1">
+          <button
+            className="btn btn-primary lg:btn-lg flex items-center gap-2"
+            onClick={toggleWalletModal} // Add the click handler here
+          >
+            <div className="w-full text-center">
+              <div className="text-xs opacity-60 normal-case">My Algo Balance</div>
+              <div className="text-lg font-bold normal-case">1,250,000.00</div>
+            </div>
+          </button>
+        </div>
       </div>
 
       <div className="p-6">
@@ -111,7 +114,7 @@ return (
         </div>
       </div>
 
-      {/* DaisyUI Modal */}
+      {/* DaisyUI Card Modal */}
       {selectedCard && (
         <dialog id="card_modal" className="modal modal-open">
           <div className="modal-box max-w-2xl">
@@ -128,6 +131,24 @@ return (
               <button
                 className="btn"
                 onClick={() => setSelectedCard(null)}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </dialog>
+      )}
+
+      {/* DaisyUI Wallet Modal */}
+      {openWalletModal && (
+        <dialog id="wallet_modal" className="modal modal-open">
+          <div className="modal-box max-w-sm">
+            <h3 className="font-bold text-lg">Connect Wallet</h3>
+            <ConnectWallet />
+            <div className="modal-action">
+              <button
+                className="btn"
+                onClick={toggleWalletModal}
               >
                 Close
               </button>

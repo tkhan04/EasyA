@@ -18,21 +18,27 @@ const cards: CardData[] = [
   {
     title: 'Card One',
     description: 'If a dog chews shoes whose shoes does he choose?',
-    image: 'https://th.bing.com/th/id/R.db2611db16a7959a14c23f0ea95a1def?rik=PaYV%2fptOCC73UA&pid=ImgRaw&r=0',
-    buttonText: 'Buy Now',
+    image: 'https://media.istockphoto.com/id/1466721380/photo/small-private-airplane-parked-at-the-airfield-at-scenic-sunrise.jpg?b=1&s=170667a&w=0&k=20&c=RRPU5BAO4oaFjVvYiM7ZrjMO0N3FyKkaoa32xLom3kE=',
+    buttonText: 'View',
   },
   {
     title: 'Card Two',
     description: 'Another description goes here.',
     image: 'https://media.istockphoto.com/photos/small-single-engine-propeller-airplane-picture-id537584895?k=6&m=537584895&s=612x612&w=0&h=8qphW1aSAd-zASssWzHaUgwXPrbF1tmiH_iNhP4xzcA=',
-    buttonText: 'Learn More',
+    buttonText: 'View',
   },
   {
     title: 'Card Three',
     description: 'Extra info about this card.',
-    image: 'https://placehold.co/400x200',
-    buttonText: 'Details',
+    image: 'https://media.istockphoto.com/id/1501079590/photo/small-light-airplane-on-green-field.jpg?b=1&s=170667a&w=0&k=20&c=UWlncGXL5zVgC01tHSGXGGxhbK6V9uNBodmxwyDxG0Q=',
+    buttonText: 'View',
   },
+  {
+    title: 'Card Four',
+    description: 'Cesana 030 ready for flight!',
+    image: 'https://media.istockphoto.com/id/172646269/photo/private-airplane-taking-off-from-runway.jpg?s=612x612&w=0&k=20&c=M_SL2UflP58OmlSZPIN0HK2FqubpjMdNdtnofIk-_xY=',
+    buttonText: 'View',
+  }
 ]
 
 
@@ -40,7 +46,10 @@ const Home: React.FC<HomeProps> = () => {
   const [openWalletModal, setOpenWalletModal] = useState<boolean>(false)
   const [openDemoModal, setOpenDemoModal] = useState<boolean>(false)
   const [appCallsDemoModal, setAppCallsDemoModal] = useState<boolean>(false)
+  const [selectedCard, setSelectedCard] = useState<CardData | null>(null)
+
   const { activeAddress } = useWallet()
+
 
   const toggleWalletModal = () => {
     setOpenWalletModal(!openWalletModal)
@@ -54,7 +63,7 @@ const Home: React.FC<HomeProps> = () => {
     setAppCallsDemoModal(!appCallsDemoModal)
   }
 
-  return (
+return (
     <>
       <div className="navbar bg-base-100 shadow-sm">
         <a className="btn btn-ghost text-xl">AirAlgo</a>
@@ -63,25 +72,59 @@ const Home: React.FC<HomeProps> = () => {
       <div className="p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {cards.map((card, idx) => (
-            <div key={idx} className="card bg-base-100 shadow-xl">
-              <figure>
-                <img src={card.image} alt={card.title} />
+            <div key={idx} className="card bg-base-100 shadow-xl h-full">
+              <figure className="h-48 w-full overflow-hidden">
+                <img
+                  src={card.image}
+                  alt={card.title}
+                  className="h-full w-full object-cover"
+                />
               </figure>
-              <div className="card-body">
-                <h2 className="card-title">{card.title}</h2>
-                <p>{card.description}</p>
+              <div className="card-body flex flex-col justify-between">
+                <div>
+                  <h2 className="card-title">{card.title}</h2>
+                  <p>{card.description}</p>
+                </div>
                 <div className="card-actions justify-end">
-                  <button className="btn btn-primary">{card.buttonText}</button>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => setSelectedCard(card)}
+                  >
+                    {card.buttonText}
+                  </button>
                 </div>
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      {/* DaisyUI Modal */}
+      {selectedCard && (
+        <dialog id="card_modal" className="modal modal-open">
+          <div className="modal-box max-w-2xl">
+            <h3 className="font-bold text-lg">{selectedCard.title}</h3>
+            <img
+              src={selectedCard.image}
+              alt={selectedCard.title}
+              className="w-full h-64 object-cover rounded-lg mt-4"
+            />
+            <p className="py-4">{selectedCard.fullDescription}</p>
+            <div className="modal-action flex gap-2">
+              <button className="btn btn-secondary">Contact</button>
+              <button className="btn btn-accent">Buy</button>
+              <button
+                className="btn"
+                onClick={() => setSelectedCard(null)}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </dialog>
+      )}
     </>
   )
 }
 
 export default Home
-
-

@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import ConnectWallet from './components/ConnectWallet'
 import Transact from './components/Transact'
 import AppCalls from './components/AppCalls'
+import PlaneActions from './components/PlaneActions'
 
 interface HomeProps { }
 
@@ -81,7 +82,7 @@ return (
         <a className="btn btn-ghost text-xl">AirAlgo</a>
 
         <div className="flex justify-center flex-1">
-          <button className="btn btn-primary lg:btn-lg flex items-center gap-2">
+          <button type="button" className="btn btn-primary lg:btn-lg flex items-center gap-2" onClick={toggleWalletModal}>
             <div className="w-full text-center">
               <div className="text-xs opacity-60 normal-case">my algo balance</div>
               <div className="text-lg font-bold normal-case">1,250,000.00</div>
@@ -123,7 +124,10 @@ return (
         </div>
       </div>
 
-      {/* DaisyUI Modal */}
+      {/* Wallet Modal */}
+      <ConnectWallet openModal={openWalletModal} closeModal={() => setOpenWalletModal(false)} />
+
+      {/* Plane Modal */}
       {selectedCard && (
         <dialog id="card_modal" className="modal modal-open">
           <div className="modal-box max-w-2xl">
@@ -133,10 +137,11 @@ return (
               alt={selectedCard.title}
               className="w-full h-64 object-cover rounded-lg mt-4"
             />
-            <p className="py-4">{selectedCard.fullDescription}</p>
+            <p className="py-4">{selectedCard.description}</p>
+            <div className="mt-4">
+              <PlaneActions />
+            </div>
             <div className="modal-action flex gap-2">
-              <button className="btn btn-secondary">Contact</button>
-              <button className="btn btn-accent">Buy</button>
               <button
                 className="btn"
                 onClick={() => setSelectedCard(null)}

@@ -13,16 +13,18 @@ interface CardData {
   image: string
   buttonText: string
   fullDescription: string
+  totalshare: number
+  shareAvalaible: number
 
 }
 
 const cards: CardData[] = [
   {
-    title: 'Card One',
+    title: 'Cesena 139',
     description: 'If a dog chews shoes whose shoes does he choose?',
     image: 'https://media.istockphoto.com/id/1466721380/photo/small-private-airplane-parked-at-the-airfield-at-scenic-sunrise.jpg?b=1&s=170667a&w=0&k=20&c=RRPU5BAO4oaFjVvYiM7ZrjMO0N3FyKkaoa32xLom3kE=',
     buttonText: 'View',
-    fullDescription: 'Built in 2009, 3000 Hours of air time. Looking to split into 30 shares for better sustainablity as I no longer have the means to afford the plane alone, however still want to retain the ablity to fly.'
+    fullDescription: "For Sale: Shares in a Pilatus PC-12. \n Ever dreamed of owning a high-performance single-engine turboprop that can get you into places a jet can't? Here's your chance! We're offering a limited number of shares in our impeccably maintained 2018 Pilatus PC-12 NG. This isn't just a plane; it's a versatile workhorse, perfect for both business trips and family getaways. With its best-in-class range and ability to operate from shorter runways, the PC-12 gives you incredible flexibility. \n Forget the major hubs—this aircraft opens up a world of smaller, more convenient airports, saving you time and hassle. The cabin is spacious and comfortable, featuring executive seating for eight, a fully enclosed lavatory, and a large cargo door for luggage and gear. Our ownership group is small, professional, and well-managed. We have a simple, transparent scheduling system and a dedicated maintenance team that keeps the aircraft in pristine condition. This is a rare opportunity to enjoy the benefits of private aviation at a fraction of the cost of full ownership. Contact us for a detailed prospectus and to schedule a showing. \n Fractional Ownership: The Iconic Cessna 172. \n Step into the world of aviation with a share in a true legend: the Cessna 172 Skyhawk. Perfect for new pilots, flight schools, or those who simply want a reliable and affordable way to fly, our 2005 model is a fantastic example of this timeless aircraft. This isn't a complex, high-performance machine—it's a straightforward, forgiving, and incredibly fun plane to fly. Our 172 is equipped with a modern Garmin G1000 glass cockpit, making it an excellent platform for building instrument time or training. The four-seat cabin is perfect for local scenic flights or short cross-country trips. Whether you're working on your private pilot's license, taking friends for a joyride, or simply building hours, this plane is ready for you. We're a small, friendly flying club seeking a new partner to share the costs and responsibilities of ownership. Our monthly dues are low, and our scheduling is fair and flexible. If you've been looking for a cost-effective way to get more time in the air, this is the perfect opportunity."
   },
   {
     title: 'Card Two',
@@ -56,6 +58,7 @@ const Home: React.FC<HomeProps> = () => {
   const [openDemoModal, setOpenDemoModal] = useState<boolean>(false)
   const [appCallsDemoModal, setAppCallsDemoModal] = useState<boolean>(false)
   const [selectedCard, setSelectedCard] = useState<CardData | null>(null)
+  const [OpenWallet, WalletState] = useState
 
   const { activeAddress } = useWallet()
 

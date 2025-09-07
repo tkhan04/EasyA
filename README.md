@@ -20,6 +20,5 @@ The Sellers' side is similar. The seller will list their plane (Given proof that
 
 
 
-![image-20250907120523161](/Users/jameer/Library/Application Support/typora-user-images/image-20250907120523161.png<video src="/Users/jameer/Downloads/hackathon.mov controls"></video>)
-
-![image-20250907120530526](/Users/jameer/Library/Application Support/typora-user-images/image-20250907120530526.png)
+![Plane 1](./IMG_4851.png)
+![Plane 2](./IMG_5850.png)

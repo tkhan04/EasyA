@@ -5,7 +5,7 @@ import ConnectWallet from './components/ConnectWallet'
 import Transact from './components/Transact'
 import AppCalls from './components/AppCalls'
 
-interface HomeProps {}
+interface HomeProps { }
 
 interface CardData {
   title: string
@@ -58,7 +58,19 @@ const Home: React.FC<HomeProps> = () => {
     <>
       <div className="navbar bg-base-100 shadow-sm">
         <a className="btn btn-ghost text-xl">AirAlgo</a>
+
+        <div className="flex justify-center flex-1">
+          <button className="btn btn-primary lg:btn-lg flex items-center gap-2">
+            <div className="w-full text-center">
+              <div className="text-xs opacity-60 normal-case">my algo balance</div>
+              <div className="text-lg font-bold normal-case">1,250,000.00</div>
+            </div>
+          </button>
+        </div>
+
+
       </div>
+
 
       <div className="p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

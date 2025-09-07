@@ -87,7 +87,6 @@ export default class FractionalPlaneOwnership extends Contract {
         decimals: 0,
         manager: Global.currentApplicationAddress,
         reserve: Global.currentApplicationAddress,
-        fee: 0,
       })
       .submit()
     return txnResult.createdAsset.id
@@ -98,6 +97,71 @@ export default class FractionalPlaneOwnership extends Contract {
 public getAlgoBalance(user: Account): uint64 {
   return user.balance
 }
+
+  // Update listing price per share (only app creator)
+  @abimethod()
+  public updatePrice(assetId: uint64, newPricePerShare: uint64): void {
+    assert(this.listedProperties(assetId).exists, 'listing not found')
+    // Only contract creator allowed to update price
+    assert(Txn.sender === Global.creatorAddress, 'unauthorized')
+
+    const listing = this.listedProperties(assetId).value
+    const updated = new AirplainShare({
+      address: listing.address,
+      totalShares: listing.totalShares,
+      availableShares: listing.availableShares,
+      pricePerShare: new arc4.UintN64(newPricePerShare),
+      privatePlaneID: listing.privatePlaneID,
+    })
+    this.listedProperties(assetId).value = updated
+  }
+
+  // Buy shares: expects grouped payment from Txn.sender -> app address covering price*quantity
+  @abimethod()
+  public buyShares(assetId: uint64, quantity: uint64): void {
+    assert(this.listedProperties(assetId).exists, 'listing not found')
+    assert(quantity > 0, 'quantity must be > 0')
+
+    const listing = this.listedProperties(assetId).value
+    const available: uint64 = listing.availableShares.valueOf() as uint64
+    assert(available >= quantity, 'insufficient available shares')
+
+    // Off-chain must group a payment covering price*quantity to the app account
+    const totalPrice = (listing.pricePerShare.valueOf() as uint64) * (quantity as uint64)
+
+    // Transfer ASA from app to buyer (buyer must have opted-in)
+    itxn
+      .assetTransfer({
+        xferAsset: assetId,
+        assetAmount: quantity,
+        assetReceiver: Txn.sender,
+        fee: 0,
+      })
+      .submit()
+
+    // Update availability
+    const updated = new AirplainShare({
+      address: listing.address,
+      totalShares: listing.totalShares,
+      availableShares: new arc4.UintN64((available as uint64) - (quantity as uint64)),
+      pricePerShare: listing.pricePerShare,
+      privatePlaneID: listing.privatePlaneID,
+    })
+    this.listedProperties(assetId).value = updated
+  }
+
+  // Withdraw ALGO from app to creator
+  @abimethod()
+  public withdraw(amount: uint64): void {
+    assert(Txn.sender === Global.creatorAddress, 'unauthorized')
+    itxn
+      .payment({
+        receiver: Txn.sender,
+        amount: amount,
+        fee: 0,
+      })
+      .submit()
+  }
 
 
 

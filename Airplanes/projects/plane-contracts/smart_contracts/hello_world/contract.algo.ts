@@ -135,7 +135,6 @@ public getAlgoBalance(user: Account): uint64 {
         xferAsset: assetId,
         assetAmount: quantity,
         assetReceiver: Txn.sender,
-        fee: 0,
       })
       .submit()
 
@@ -158,7 +157,6 @@ public getAlgoBalance(user: Account): uint64 {
       .payment({
         receiver: Txn.sender,
         amount: amount,
-        fee: 0,
       })
       .submit()
   }

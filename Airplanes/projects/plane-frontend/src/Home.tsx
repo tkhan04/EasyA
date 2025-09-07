@@ -12,6 +12,8 @@ interface CardData {
   description: string
   image: string
   buttonText: string
+  fullDescription: string
+
 }
 
 const cards: CardData[] = [
@@ -20,24 +22,31 @@ const cards: CardData[] = [
     description: 'If a dog chews shoes whose shoes does he choose?',
     image: 'https://media.istockphoto.com/id/1466721380/photo/small-private-airplane-parked-at-the-airfield-at-scenic-sunrise.jpg?b=1&s=170667a&w=0&k=20&c=RRPU5BAO4oaFjVvYiM7ZrjMO0N3FyKkaoa32xLom3kE=',
     buttonText: 'View',
+    fullDescription: 'Built in 2009, 3000 Hours of air time. Looking to split into 30 shares for better sustainablity as I no longer have the means to afford the plane alone, however still want to retain the ablity to fly.'
   },
   {
     title: 'Card Two',
     description: 'Another description goes here.',
     image: 'https://media.istockphoto.com/photos/small-single-engine-propeller-airplane-picture-id537584895?k=6&m=537584895&s=612x612&w=0&h=8qphW1aSAd-zASssWzHaUgwXPrbF1tmiH_iNhP4xzcA=',
     buttonText: 'View',
+    fullDescription: 'Built in 2009, 3000 Hours of air time. Looking to split into 30 shares for better sustainablity as I no longer have the means to afford the plane alone, however still want to retain the ablity to fly.'
+
   },
   {
     title: 'Card Three',
     description: 'Extra info about this card.',
     image: 'https://media.istockphoto.com/id/1501079590/photo/small-light-airplane-on-green-field.jpg?b=1&s=170667a&w=0&k=20&c=UWlncGXL5zVgC01tHSGXGGxhbK6V9uNBodmxwyDxG0Q=',
     buttonText: 'View',
+    fullDescription: 'Built in 2009, 3000 Hours of air time. Looking to split into 30 shares for better sustainablity as I no longer have the means to afford the plane alone, however still want to retain the ablity to fly.'
+
   },
   {
     title: 'Card Four',
     description: 'Cesana 030 ready for flight!',
     image: 'https://media.istockphoto.com/id/172646269/photo/private-airplane-taking-off-from-runway.jpg?s=612x612&w=0&k=20&c=M_SL2UflP58OmlSZPIN0HK2FqubpjMdNdtnofIk-_xY=',
     buttonText: 'View',
+    fullDescription: 'Built in 2009, 3000 Hours of air time. Looking to split into 30 shares for better sustainablity as I no longer have the means to afford the plane alone, however still want to retain the ablity to fly.'
+
   }
 ]
 
